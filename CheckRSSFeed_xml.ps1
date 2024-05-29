@@ -2,7 +2,7 @@
     [string]$latestUpdateDateParam
 )
 
-$keywords = @("ADC, Netscaler, Gateway")
+$keywords = @("ADC", "Netscaler", "Gateway")
 
 function Parse-Date($dateString) {
     try {
@@ -23,6 +23,19 @@ function Parse-Date($dateString) {
         Write-Output $result
         exit 1
     }
+}
+
+function checkTitleKeywords {
+    param (
+        [string]$title_,
+        [string[]]$keywords_
+    )
+    foreach ($keyword in $keywords_) {
+        if ($title_ -like "*$keyword*") {
+            return $true
+        }
+    }
+    return $false
 }
 
 $latestUpdateDate = Parse-Date $latestUpdateDateParam
@@ -61,7 +74,7 @@ try {
     $latestEntryLink = $latestEntry.link
     $latestEntryTitle = [string]$latestEntry.title
 
-    if ($latestEntryDateUtc -gt $latestUpdateDateUtc) {
+    if (($latestEntryDateUtc -gt $latestUpdateDateUtc) -and (checkTitleKeywords -title_ $latestEntryTitle -keywords_ $keywords)) {
         $errorMessage = "Es wurden neue Sicherheitsluecken fuer Citrix-Produkte veroeffentlicht. Titel: $latestEntryTitle Link: $latestEntryLink"
         $result = @{
             prtg = @{
