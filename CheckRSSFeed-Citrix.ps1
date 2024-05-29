@@ -4,7 +4,7 @@
 
 $keywords = @("ADC", "Netscaler", "Gateway")
 
-function Parse-Date($dateString) {
+function parseDate($dateString) {
     try {
         $cultureInfo = [System.Globalization.CultureInfo]::GetCultureInfo("de-DE")
         $latestUpdateDate = [DateTime]::ParseExact($dateString, "dd.MM.yyyy HH:mm:ss", $cultureInfo)
@@ -38,7 +38,7 @@ function checkTitleKeywords {
     return $false
 }
 
-$latestUpdateDate = Parse-Date $latestUpdateDateParam
+$latestUpdateDate = parseDate $latestUpdateDateParam
 
 # Convert the input date to UTC
 $latestUpdateDateUtc = [System.TimeZoneInfo]::ConvertTimeToUtc($latestUpdateDate, [System.TimeZoneInfo]::FindSystemTimeZoneById("Central Europe Standard Time"))
