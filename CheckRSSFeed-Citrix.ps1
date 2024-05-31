@@ -86,7 +86,7 @@ try {
         Write-Output $result 
     }
     else {
-        $message = "Aktuell keine Sicherheitsluecken bei Citrix-Produkten"
+        $message = "Aktuell keine Sicherheitsluecken bei folgenden Citrix-Produkten: $keywords"
         $result = @{
             prtg = @{
                 text   = $message
